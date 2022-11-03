@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">IMS</string>
+    <string name="acc_name">账号：</string>
+    <string name="acc_hint">请输入账号</string>
+    <string name="pw_name">密码：</string>
+    <string name="pw_hint">请输入密码</string>
+</resources>
