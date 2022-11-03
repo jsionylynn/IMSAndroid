@@ -1,7 +1,7 @@
 package com.ims.imsandroid.ui.page
 
 import android.content.Context
-import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import com.ims.imsandroid.IMSApplication
 import com.ims.imsandroid.R
 import com.ims.imsandroid.db.AppDatabase
+import com.ims.imsandroid.db.bean.User
 
 /**
  *
@@ -118,16 +119,32 @@ fun login() {
 }
 
 fun login(context: Context, acc: String, pws: String) {
-    val all = AppDatabase.getInstance(context).userDao().getAll()
-    Log.e("Lyn", "login: $all")
-//    if (acc.isBlank()) {
-//        Toast.makeText(context, "请输入账号", Toast.LENGTH_SHORT).show()
-//        return
-//    }
-//    if (pws.isBlank()) {
-//        Toast.makeText(context, "请输入密码", Toast.LENGTH_SHORT).show()
-//        return
-//    }
+//    val all = AppDatabase.getInstance(context).userDao().getAll()
+//    Log.e("Lyn", "login: $all")
+    if (acc.isBlank()) {
+        Toast.makeText(context, "请输入账号", Toast.LENGTH_SHORT).show()
+        return
+    }
+    if (pws.isBlank()) {
+        Toast.makeText(context, "请输入密码", Toast.LENGTH_SHORT).show()
+        return
+    }
+
+    val user = AppDatabase.getInstance(context).userDao().findByName(acc)
+    if (user == null) {
+        Toast.makeText(context, "没有该用户", Toast.LENGTH_SHORT).show()
+        return
+    } else {
+        if(!user.account .equals(acc)){
+            Toast.makeText(context, "账号错误", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if(!user.password .equals(pws)){
+            Toast.makeText(context, "密码错误", Toast.LENGTH_SHORT).show()
+            return
+        }
+        Toast.makeText(context, "登录成功", Toast.LENGTH_SHORT).show()
+    }
 //    AppDatabase.getInstance(context).userDao().insertUsers(User(account = acc, password = pws))
 }
 

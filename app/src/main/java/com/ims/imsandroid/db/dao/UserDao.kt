@@ -24,9 +24,8 @@ interface UserDao : BaseDAO<User> {
     @Query("SELECT * FROM user WHERE id IN (:userIds)")
     fun loadAllByIds(userIds: IntArray): List<User>
 
-    @Query("SELECT * FROM user WHERE ACCOUNT LIKE :first AND " +
-            "ACCOUNT LIKE :last ORDER BY ACCOUNT DESC LIMIT 1")
-    fun findByName(first: String, last: String): User
+    @Query("SELECT * FROM user WHERE ACCOUNT = :acc")
+    fun findByName(acc: String): User
 
     // onConflict 配置主键冲突处理
     @Insert(onConflict = OnConflictStrategy.REPLACE)
