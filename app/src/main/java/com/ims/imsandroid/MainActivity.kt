@@ -20,7 +20,7 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.ims.imsandroid.ui.page.PageConstant.LOGIN_PAGE
 import com.ims.imsandroid.ui.page.PageConstant.WELCOME_PAGE
 import com.ims.imsandroid.ui.page.login.login
-import com.ims.imsandroid.ui.page.welcome
+import com.ims.imsandroid.ui.page.welcome.welcome
 import com.ims.imsandroid.ui.theme.IMSAndroidTheme
 import dagger.hilt.android.AndroidEntryPoint
 
