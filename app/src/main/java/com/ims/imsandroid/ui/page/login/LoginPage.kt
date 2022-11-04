@@ -1,13 +1,10 @@
-package com.ims.imsandroid.ui.page
+package com.ims.imsandroid.ui.page.login
 
 import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Button
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import com.ims.imsandroid.IMSApplication
 import com.ims.imsandroid.R
 import com.ims.imsandroid.db.AppDatabase
-import com.ims.imsandroid.db.bean.User
+import com.ims.imsandroid.utils.showLongToast
 
 /**
  *
@@ -122,35 +119,35 @@ fun login(context: Context, acc: String, pws: String) {
 //    val all = AppDatabase.getInstance(context).userDao().getAll()
 //    Log.e("Lyn", "login: $all")
     if (acc.isBlank()) {
-        Toast.makeText(context, "请输入账号", Toast.LENGTH_SHORT).show()
+        "请输入账号".showLongToast()
         return
     }
     if (pws.isBlank()) {
-        Toast.makeText(context, "请输入密码", Toast.LENGTH_SHORT).show()
+        "请输入密码".showLongToast()
         return
     }
 
     val user = AppDatabase.getInstance(context).userDao().findByName(acc)
-    if (user == null) {
-        Toast.makeText(context, "没有该用户", Toast.LENGTH_SHORT).show()
+    if (!user.account.equals(acc)) {
+        "账号错误".showLongToast()
         return
-    } else {
-        if(!user.account .equals(acc)){
-            Toast.makeText(context, "账号错误", Toast.LENGTH_SHORT).show()
-            return
-        }
-        if(!user.password .equals(pws)){
-            Toast.makeText(context, "密码错误", Toast.LENGTH_SHORT).show()
-            return
-        }
-        Toast.makeText(context, "登录成功", Toast.LENGTH_SHORT).show()
     }
-//    AppDatabase.getInstance(context).userDao().insertUsers(User(account = acc, password = pws))
+    if (!user.password.equals(pws)) {
+        "密码错误".showLongToast()
+        return
+    }
+    "登录成功".showLongToast()
+    //    AppDatabase.getInstance(context).userDao().insertUsers(User(account = acc, password = pws))
 }
 
 
 @Preview
 @Composable
 fun PreviewMessageCard() {
-    login()
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colors.background
+    ) {
+        login()
+    }
 }

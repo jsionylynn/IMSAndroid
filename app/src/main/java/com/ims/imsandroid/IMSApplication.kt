@@ -26,6 +26,7 @@ class IMSApplication : Application() {
         @SuppressLint("StaticFieldLeak")
         lateinit var context: Context
         lateinit var db: AppDatabase
+
         @SuppressLint("StaticFieldLeak")
         lateinit var instance: IMSApplication
     }
