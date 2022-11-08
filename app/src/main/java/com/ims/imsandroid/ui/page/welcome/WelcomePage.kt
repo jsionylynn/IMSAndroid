@@ -3,7 +3,7 @@ package com.ims.imsandroid.ui.page.welcome
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -12,8 +12,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.lifecycle.MutableLiveData
+import androidx.navigation.NavHostController
 import com.ims.imsandroid.R
-import java.util.*
+import com.ims.imsandroid.ui.page.PageConstant
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.*
 
 /**
  *
@@ -30,8 +38,8 @@ import java.util.*
  */
 
 @Composable
-fun welcome() {
-    var num by remember { mutableStateOf(0) }
+fun welcome(lifecycleScope: LifecycleCoroutineScope,mNavController: NavHostController) {
+    val num = MutableLiveData<Int>(5)
     Column {
         Modifier
             .fillMaxWidth()
@@ -42,32 +50,60 @@ fun welcome() {
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             color = colorResource(id = R.color.black),
-            modifier = Modifier.align(Alignment.CenterHorizontally).height(0.dp).width(0.dp)
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .height(0.dp)
+                .width(0.dp)
         )
 
+        Spacer(modifier = Modifier.height(60.dp))
+
         Text(
-            text = "$num",
-            fontSize = 4.sp,
+            text = "${num.value}",
+            fontSize = 40.sp,
             fontWeight = FontWeight.Bold,
             color = colorResource(id = R.color.purple_700),
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
     }
 
-    toLogin(num)
+    if(mNavController.currentDestination?.route.equals(PageConstant.WELCOME_PAGE)) {
+        toLogin(num, lifecycleScope, mNavController)
+    }
+}
+fun toLogin(num: MutableLiveData<Int>,lifecycleScope: LifecycleCoroutineScope,mNavController: NavHostController) {
+
+    countDownCoroutines(5, lifecycleScope,
+        onTick = { second ->
+            num.value = second
+        }, onStart = {
+        }, onFinish = {
+            mNavController.navigate(PageConstant.HOME_PAGE)
+        })
 }
 
-
-fun toLogin(num: Int) {
-    Timer().schedule(object : TimerTask() {
-        override fun run() {
-            num + 1
+fun countDownCoroutines(
+    total: Int,
+    scope: CoroutineScope,
+    onTick: (Int) -> Unit,
+    onStart: (() -> Unit)? = null,
+    onFinish: (() -> Unit)? = null,
+): Job {
+    return flow {
+        for (i in total downTo 0) {
+            emit(i)
+            delay(1000)
         }
-    }, 4000)
+    }.flowOn(Dispatchers.Main)
+        .onStart { onStart?.invoke() }
+        .onCompletion { onFinish?.invoke() }
+        .onEach { onTick.invoke(it) }
+        .launchIn(scope)
 }
+
 
 @Preview
 @Composable
 fun showWelcome() {
-    welcome()
+//    welcome(lifecycleScope)
 }

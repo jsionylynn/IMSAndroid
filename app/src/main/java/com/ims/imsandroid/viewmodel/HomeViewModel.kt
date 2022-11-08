@@ -13,6 +13,6 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(repository: HomeRepository) : ViewModel() {
 
-    val result = repository.getOrder()
+    val orders = repository.getOrder()
 
 }

@@ -3,6 +3,7 @@ package com.ims.imsandroid.db.dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Update
+import com.ims.imsandroid.db.bean.User
 
 /**
  *
@@ -36,4 +37,6 @@ interface BaseDAO<T> {
 
     @Delete
     suspend fun delete(list: List<T>)
+    @Delete
+    suspend fun delete(obj: User)
 }

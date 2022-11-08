@@ -18,6 +18,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.ims.imsandroid.IMSApplication
 import com.ims.imsandroid.R
 import com.ims.imsandroid.db.AppDatabase
@@ -38,7 +39,7 @@ import com.ims.imsandroid.utils.showLongToast
  */
 
 @Composable
-fun login() {
+fun login(mNavController: NavHostController) {
     val context: Context = IMSApplication.context
     var account by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -88,14 +89,14 @@ fun login() {
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Done
             ),
-            keyboardActions = KeyboardActions(onDone = { login(context, account, password) }),
+            keyboardActions = KeyboardActions(onDone = { login(context, account, password,mNavController) }),
             modifier = Modifier
                 .padding(10.dp)
                 .align(Alignment.CenterHorizontally)
         )
         Spacer(modifier = Modifier.height(60.dp))
         Button(
-            onClick = { login(context, account, password) },
+            onClick = { login(context, account, password,mNavController) },
             modifier = Modifier
                 .width(200.dp)
                 .height(40.dp)
@@ -115,7 +116,7 @@ fun login() {
 //    }
 }
 
-fun login(context: Context, acc: String, pws: String) {
+fun login(context: Context, acc: String, pws: String,mNavController: NavHostController) {
 //    val all = AppDatabase.getInstance(context).userDao().getAll()
 //    Log.e("Lyn", "login: $all")
     if (acc.isBlank()) {
@@ -141,13 +142,13 @@ fun login(context: Context, acc: String, pws: String) {
 }
 
 
-@Preview
-@Composable
-fun PreviewMessageCard() {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colors.background
-    ) {
-        login()
-    }
-}
+//@Preview
+//@Composable
+//fun PreviewMessageCard() {
+//    Surface(
+//        modifier = Modifier.fillMaxSize(),
+//        color = MaterialTheme.colors.background
+//    ) {
+//        login()
+//    }
+//}

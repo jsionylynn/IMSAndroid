@@ -4,20 +4,22 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.ims.imsandroid.db.bean.Goods
 import com.ims.imsandroid.db.bean.User
+import com.ims.imsandroid.db.dao.GoodsDao
 import com.ims.imsandroid.db.dao.UserDao
 
 /**
  * 数据库
  * @description AppDatabase
- * @author llw
- * @date 2022/4/4 1:33
+ * @author jsiony
+ * @date 2022/11/4 14:46
  */
-@Database(entities = [User::class], version = 1, exportSchema = false)
+@Database(entities = [User::class,Goods::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
-
+    abstract fun goodsDao(): GoodsDao
     companion object {
 
         @Volatile

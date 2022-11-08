@@ -14,14 +14,19 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.ims.imsandroid.ui.page.PageConstant.HOME_PAGE
 import com.ims.imsandroid.ui.page.PageConstant.LOGIN_PAGE
 import com.ims.imsandroid.ui.page.PageConstant.WELCOME_PAGE
+import com.ims.imsandroid.ui.page.home.HomePage
 import com.ims.imsandroid.ui.page.login.login
 import com.ims.imsandroid.ui.page.welcome.welcome
 import com.ims.imsandroid.ui.theme.IMSAndroidTheme
+import com.ims.imsandroid.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,6 +42,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     val navController = rememberAnimatedNavController()
+                    val homeViewModel: HomeViewModel = viewModel()
                     AnimatedNavHost(
                         navController = navController,
                         startDestination = WELCOME_PAGE,
@@ -69,11 +75,15 @@ class MainActivity : ComponentActivity() {
                     ) {
                         //登录页
                         composable(WELCOME_PAGE) {
-                            welcome()
+                            welcome(lifecycleScope,navController)
                         }
                         //登录页
                         composable(LOGIN_PAGE) {
-                            login()
+                            login(navController)
+                        }
+
+                        composable(HOME_PAGE) {
+                            HomePage(navController,homeViewModel)
                         }
                     }
                 }
