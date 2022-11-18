@@ -78,7 +78,7 @@ fun toLogin(num: MutableLiveData<Int>,lifecycleScope: LifecycleCoroutineScope,mN
             num.value = second
         }, onStart = {
         }, onFinish = {
-            mNavController.navigate(PageConstant.HOME_PAGE)
+            mNavController.navigate(PageConstant.LOGIN_PAGE)
         })
 }
 

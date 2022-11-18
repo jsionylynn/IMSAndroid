@@ -1,6 +1,7 @@
 package com.ims.imsandroid.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.ims.imsandroid.repository.HomeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -12,7 +13,16 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class HomeViewModel @Inject constructor(repository: HomeRepository) : ViewModel() {
-
     val orders = repository.getOrder()
 
+    companion object {
+        fun provideFactory(
+            postsRepository: HomeRepository,
+        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return HomeViewModel(postsRepository) as T
+            }
+        }
+    }
 }

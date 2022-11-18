@@ -19,6 +19,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.ims.imsandroid.repository.HomeRepository
 import com.ims.imsandroid.ui.page.PageConstant.HOME_PAGE
 import com.ims.imsandroid.ui.page.PageConstant.LOGIN_PAGE
 import com.ims.imsandroid.ui.page.PageConstant.WELCOME_PAGE
@@ -42,7 +43,9 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     val navController = rememberAnimatedNavController()
-                    val homeViewModel: HomeViewModel = viewModel()
+                    val homeViewModel: HomeViewModel = viewModel(
+                        factory = HomeViewModel.provideFactory(HomeRepository())
+                    )
                     AnimatedNavHost(
                         navController = navController,
                         startDestination = WELCOME_PAGE,
@@ -75,7 +78,7 @@ class MainActivity : ComponentActivity() {
                     ) {
                         //登录页
                         composable(WELCOME_PAGE) {
-                            welcome(lifecycleScope,navController)
+                            welcome(lifecycleScope, navController)
                         }
                         //登录页
                         composable(LOGIN_PAGE) {
@@ -83,7 +86,7 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(HOME_PAGE) {
-                            HomePage(navController,homeViewModel)
+                            HomePage(navController, homeViewModel)
                         }
                     }
                 }

@@ -22,6 +22,7 @@ import androidx.navigation.NavHostController
 import com.ims.imsandroid.IMSApplication
 import com.ims.imsandroid.R
 import com.ims.imsandroid.db.AppDatabase
+import com.ims.imsandroid.ui.page.PageConstant.HOME_PAGE
 import com.ims.imsandroid.utils.showLongToast
 
 /**
@@ -138,6 +139,7 @@ fun login(context: Context, acc: String, pws: String,mNavController: NavHostCont
         return
     }
     "登录成功".showLongToast()
+    mNavController.navigate(HOME_PAGE)
     //    AppDatabase.getInstance(context).userDao().insertUsers(User(account = acc, password = pws))
 }
 
