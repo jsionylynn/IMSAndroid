@@ -3,6 +3,7 @@ package com.ims.imsandroid.db.bean
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.*
 
 /**
  *
@@ -34,4 +35,5 @@ data class Stock(
     @ColumnInfo(name = "QUANTITY") var quaniity: Double?,//数量
     @ColumnInfo(name = "REFUNDED_QTY") var refundedQty: Double?,//已退数量
     @ColumnInfo(name = "REFUNDED_FEE") var refundedFee: Double?,//已退金额
+    @ColumnInfo(name = "UPDATE_TIME") var updateTime: Date?, // 更新时间
     )

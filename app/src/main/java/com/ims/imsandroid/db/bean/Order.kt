@@ -22,7 +22,7 @@ import java.util.*
 @Entity
 data class Order(
     @PrimaryKey(autoGenerate = true) var id: Long = 0,
-    @ColumnInfo(name = "ORDER_TIME") var orderTime: Date?, // 时间
+    @ColumnInfo(name = "TIME") var time: Date?, // 时间
     @ColumnInfo(name = "STATUS") var status: String?, // 状态（订单状态(P-待拣货,F-交易完成）
     @ColumnInfo(name = "CREATE_BY") var createBy: String?,//创建人
     @ColumnInfo(name = "REMARK") var remark: String?,//备注

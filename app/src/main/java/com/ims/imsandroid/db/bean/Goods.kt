@@ -3,6 +3,7 @@ package com.ims.imsandroid.db.bean
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.*
 
 /**
  *
@@ -31,4 +32,5 @@ data class Goods(
     @ColumnInfo(name = "DESCRIPTION") var description: String?,//描述
     @ColumnInfo(name = "COVER_PIC") var coverPic: Byte?,//封面图
     @ColumnInfo(name = "STATUS") var status: String?,//状态(N-新建,O-上架,F-下架,D-删除)
+    @ColumnInfo(name = "TIME") var time: Date?, // 时间
 )

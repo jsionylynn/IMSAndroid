@@ -36,4 +36,5 @@ data class OrderGoods(
     @ColumnInfo(name = "QUANTITY") var quaniity: Double?,//数量
     @ColumnInfo(name = "REFUNDED_QTY") var refundedQty: Double?,//已退数量
     @ColumnInfo(name = "REFUNDED_FEE") var refundedFee: Double?,//已退金额
+    @ColumnInfo(name = "TIME") var time: Date?, // 时间
 )

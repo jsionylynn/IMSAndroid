@@ -3,12 +3,12 @@ package com.ims.imsandroid.ui.page.home
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.*
+import androidx.compose.material.Divider
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -22,12 +22,9 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.google.gson.Gson
-import com.ims.imsandroid.db.bean.Goods
-import com.ims.imsandroid.ui.page.PageConstant
-import com.ims.imsandroid.viewmodel.HomeViewModel
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
 import com.ims.imsandroid.R
+import com.ims.imsandroid.db.bean.Order
+import com.ims.imsandroid.viewmodel.HomeViewModel
 
 /**
  *
@@ -52,15 +49,21 @@ fun OrderItem(mNavController: NavHostController, viewModel: HomeViewModel) {
         modifier = Modifier
             .padding(8.dp)
     ) {
-        var orders: List<Goods> = viewModel.orders.value?.getOrNull()!!
+
+
+        var orders: List<Order>? = viewModel.orders.value?.getOrNull()
+        if (orders.isNullOrEmpty()) {
+            return@LazyColumn
+        }
         items(orders) { order ->
             Log.d("TAG", "ShowNewsList: ${Gson().toJson(orders)}")
-            Row(modifier = Modifier
+            Row(
+                modifier = Modifier
 //                .clickable {
 //                    val encodedUrl = URLEncoder.encode(order.name, StandardCharsets.UTF_8.toString())
 //                    mNavController.navigate("${PageConstant.WEB_VIEW_PAGE}/${new.title}/$encodedUrl")
 //                }
-                .padding(8.dp)
+                    .padding(8.dp)
             ) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
@@ -76,9 +79,9 @@ fun OrderItem(mNavController: NavHostController, viewModel: HomeViewModel) {
                     contentScale = ContentScale.FillBounds
                 )
                 Column(modifier = Modifier.padding(8.dp, 0.dp, 0.dp, 0.dp)) {
-                    order.name?.let {
+                    order.stock?.let {
                         Text(
-                            text = it,
+                            text = it.toString(),
                             fontWeight = FontWeight.ExtraBold,
                             fontSize = 16.sp
                         )

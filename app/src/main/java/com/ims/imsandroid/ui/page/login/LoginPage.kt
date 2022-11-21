@@ -22,6 +22,7 @@ import androidx.navigation.NavHostController
 import com.ims.imsandroid.IMSApplication
 import com.ims.imsandroid.R
 import com.ims.imsandroid.db.AppDatabase
+import com.ims.imsandroid.db.bean.User
 import com.ims.imsandroid.ui.page.PageConstant.HOME_PAGE
 import com.ims.imsandroid.utils.showLongToast
 
@@ -120,6 +121,7 @@ fun login(mNavController: NavHostController) {
 fun login(context: Context, acc: String, pws: String,mNavController: NavHostController) {
 //    val all = AppDatabase.getInstance(context).userDao().getAll()
 //    Log.e("Lyn", "login: $all")
+    AppDatabase.getInstance(context).userDao().insertUsers(User(account = acc, password = pws))
     if (acc.isBlank()) {
         "请输入账号".showLongToast()
         return
@@ -129,7 +131,12 @@ fun login(context: Context, acc: String, pws: String,mNavController: NavHostCont
         return
     }
 
-    val user = AppDatabase.getInstance(context).userDao().findByName(acc)
+    val user: User? = AppDatabase.getInstance(context).userDao().findByName(acc)
+
+    if(user == null){
+        "账号不存在，请重新输入！".showLongToast()
+        return
+    }
     if (!user.account.equals(acc)) {
         "账号错误".showLongToast()
         return
@@ -140,7 +147,7 @@ fun login(context: Context, acc: String, pws: String,mNavController: NavHostCont
     }
     "登录成功".showLongToast()
     mNavController.navigate(HOME_PAGE)
-    //    AppDatabase.getInstance(context).userDao().insertUsers(User(account = acc, password = pws))
+        AppDatabase.getInstance(context).userDao().insertUsers(User(account = acc, password = pws))
 }
 
 

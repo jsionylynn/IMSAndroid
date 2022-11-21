@@ -37,6 +37,7 @@ interface BaseDAO<T> {
 
     @Delete
     suspend fun delete(list: List<T>)
+
     @Delete
     suspend fun delete(obj: User)
 }
