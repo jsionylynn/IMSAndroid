@@ -17,4 +17,6 @@ object PageConstant {
 
     const val ORDER_ITEM = "ORDER"
 
+    const val ADD_ORDER = "ADD_ORDER"
+
 }

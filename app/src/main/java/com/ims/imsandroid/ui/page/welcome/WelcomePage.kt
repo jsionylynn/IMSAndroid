@@ -4,6 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -13,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavHostController
 import com.ims.imsandroid.R
@@ -39,7 +43,9 @@ import kotlinx.coroutines.flow.*
 
 @Composable
 fun welcome(lifecycleScope: LifecycleCoroutineScope,mNavController: NavHostController) {
-    val num = MutableLiveData<Int>(5)
+    var num  = remember {
+        mutableStateOf("5")
+    }
     Column {
         Modifier
             .fillMaxWidth()
@@ -59,7 +65,7 @@ fun welcome(lifecycleScope: LifecycleCoroutineScope,mNavController: NavHostContr
         Spacer(modifier = Modifier.height(60.dp))
 
         Text(
-            text = "${num.value}",
+            text = num.value,
             fontSize = 40.sp,
             fontWeight = FontWeight.Bold,
             color = colorResource(id = R.color.purple_700),
@@ -68,14 +74,14 @@ fun welcome(lifecycleScope: LifecycleCoroutineScope,mNavController: NavHostContr
     }
 
     if(mNavController.currentDestination?.route.equals(PageConstant.WELCOME_PAGE)) {
-        toLogin(num, lifecycleScope, mNavController)
+        toLogin(num , lifecycleScope, mNavController)
     }
 }
-fun toLogin(num: MutableLiveData<Int>,lifecycleScope: LifecycleCoroutineScope,mNavController: NavHostController) {
+fun toLogin(num: MutableState<String>, lifecycleScope: LifecycleCoroutineScope, mNavController: NavHostController) {
 
     countDownCoroutines(5, lifecycleScope,
         onTick = { second ->
-            num.value = second
+            num.value = second.toString()
         }, onStart = {
         }, onFinish = {
             mNavController.navigate(PageConstant.LOGIN_PAGE)

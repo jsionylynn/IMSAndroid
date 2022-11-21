@@ -8,18 +8,25 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AddComment
+import androidx.compose.material.icons.filled.Sick
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.ims.imsandroid.ui.bottom.BottomBarView
 import com.ims.imsandroid.R
+import com.ims.imsandroid.ui.page.PageConstant
 import com.ims.imsandroid.ui.page.PageConstant.GOODS_ITEM
 import com.ims.imsandroid.ui.page.PageConstant.ORDER_ITEM
 import com.ims.imsandroid.ui.page.PageConstant.STATISTICS_ITEM
@@ -44,7 +51,7 @@ import com.ims.imsandroid.viewmodel.HomeViewModel
 @Composable
 fun HomePage(mNavController: NavHostController, viewModel: HomeViewModel){
     val navController = rememberAnimatedNavController()
-
+    var changeItem : LiveData<String>  = MutableLiveData()
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
     Scaffold(
@@ -72,13 +79,13 @@ fun HomePage(mNavController: NavHostController, viewModel: HomeViewModel){
 //                        Icon(Icons.Default.Menu, contentDescription = "Menu")
 //                    }
 //                },
-//                actions = {
-//                    IconButton(onClick = {
-//                        mNavController.navigate(PageConstant.EPIDEMIC_NEWS_LIST_PAGE)
-//                    }) {
-//                        Icon(Icons.Default.Sick, contentDescription = "疫情")
-//                    }
-//                }
+                actions = {
+                    IconButton(onClick = {
+                        mNavController.navigate(PageConstant.ADD_ORDER)
+                    }) {
+                        Icon(Icons.Default.Add, contentDescription = "添加订单")
+                    }
+                }
             )
         },
         modifier = Modifier.fillMaxSize(),
