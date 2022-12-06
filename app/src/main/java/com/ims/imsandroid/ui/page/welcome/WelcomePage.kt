@@ -1,12 +1,11 @@
 package com.ims.imsandroid.ui.page.welcome
 
+import android.annotation.SuppressLint
+import android.os.CountDownTimer
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,8 +15,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LifecycleCoroutineScope
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavHostController
 import com.ims.imsandroid.R
 import com.ims.imsandroid.ui.page.PageConstant
@@ -41,11 +38,10 @@ import kotlinx.coroutines.flow.*
  * @Version:        1.0.0
  */
 
+@SuppressLint("ComposableNaming")
 @Composable
 fun welcome(lifecycleScope: LifecycleCoroutineScope,mNavController: NavHostController) {
-    var num  = remember {
-        mutableStateOf("5")
-    }
+    val num = remember { mutableStateOf("") }
     Column {
         Modifier
             .fillMaxWidth()
@@ -79,13 +75,25 @@ fun welcome(lifecycleScope: LifecycleCoroutineScope,mNavController: NavHostContr
 }
 fun toLogin(num: MutableState<String>, lifecycleScope: LifecycleCoroutineScope, mNavController: NavHostController) {
 
-    countDownCoroutines(5, lifecycleScope,
-        onTick = { second ->
-            num.value = second.toString()
-        }, onStart = {
-        }, onFinish = {
-            mNavController.navigate(PageConstant.LOGIN_PAGE)
-        })
+//    val job = countDownCoroutines(5, lifecycleScope,
+//        onTick = { second ->
+//            num.value = second.toString()
+//        }, onStart = {
+//        }, onFinish = {
+//            mNavController.navigate(PageConstant.LOGIN_PAGE)
+//        })
+
+    val TotalTime : Long = 5*1000 //总时长 2小时
+    object : CountDownTimer(TotalTime,1000){//1000ms运行一次onTick里面的方法
+    override fun onFinish() {
+        mNavController.navigate(PageConstant.LOGIN_PAGE)
+    }
+
+        override fun onTick(millisUntilFinished: Long) {
+            num.value = (millisUntilFinished/1000).toString()
+        }
+    }.start()
+
 }
 
 fun countDownCoroutines(
@@ -106,6 +114,9 @@ fun countDownCoroutines(
         .onEach { onTick.invoke(it) }
         .launchIn(scope)
 }
+
+
+
 
 
 @Preview

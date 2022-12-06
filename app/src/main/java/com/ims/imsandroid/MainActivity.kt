@@ -82,7 +82,9 @@ class MainActivity : ComponentActivity() {
                         }
                         //登录页
                         composable(LOGIN_PAGE) {
-                            login(navController)
+                            if(navController.currentDestination?.route.equals(LOGIN_PAGE)) {
+                                login(navController)
+                            }
                         }
 
                         composable(HOME_PAGE) {
