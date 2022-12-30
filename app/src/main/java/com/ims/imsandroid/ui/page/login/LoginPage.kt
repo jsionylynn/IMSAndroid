@@ -25,6 +25,7 @@ import com.ims.imsandroid.db.AppDatabase
 import com.ims.imsandroid.db.bean.User
 import com.ims.imsandroid.ui.page.PageConstant.HOME_PAGE
 import com.ims.imsandroid.utils.showLongToast
+import com.tencent.mmkv.MMKV
 
 /**
  *
@@ -147,7 +148,7 @@ fun login(context: Context, acc: String, pws: String,mNavController: NavHostCont
     }
     "登录成功".showLongToast()
     mNavController.navigate(HOME_PAGE)
-        AppDatabase.getInstance(context).userDao().insertUsers(User(account = acc, password = pws))
+    MMKV.defaultMMKV().encode("NAME",acc)
 }
 
 

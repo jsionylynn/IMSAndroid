@@ -27,6 +27,7 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.ims.imsandroid.ui.bottom.BottomBarView
 import com.ims.imsandroid.R
 import com.ims.imsandroid.ui.page.PageConstant
+import com.ims.imsandroid.ui.page.PageConstant.ADD_ORDER
 import com.ims.imsandroid.ui.page.PageConstant.GOODS_ITEM
 import com.ims.imsandroid.ui.page.PageConstant.ORDER_ITEM
 import com.ims.imsandroid.ui.page.PageConstant.STATISTICS_ITEM
@@ -81,7 +82,7 @@ fun HomePage(mNavController: NavHostController, viewModel: HomeViewModel){
 //                },
                 actions = {
                     IconButton(onClick = {
-                        mNavController.navigate(PageConstant.ADD_ORDER)
+                        mNavController.navigate(ADD_ORDER)
                     }) {
                         Icon(Icons.Default.Add, contentDescription = "添加订单")
                     }
@@ -129,6 +130,9 @@ fun HomePage(mNavController: NavHostController, viewModel: HomeViewModel){
                 OrderItem(mNavController, viewModel)
             }
             composable(STATISTICS_ITEM) {
+                OrderItem(mNavController, viewModel)
+            }
+            composable(ADD_ORDER) {
                 OrderItem(mNavController, viewModel)
             }
         }

@@ -24,6 +24,17 @@ class HomeRepository @Inject constructor() : BaseRepository() {
 //        else Result.failure(RuntimeException("getNews response code is ${news.code} msg is ${news.msg}"))
     }
 
+
+    /**
+     * 获取商品
+     */
+    fun getGoods() = fire(Dispatchers.IO) {
+        val goods = IMSApplication.db.goodsDao().getAll()
+        Result.success(goods)
+//        if (news.code == CODE) Result.success(news)
+//        else Result.failure(RuntimeException("getNews response code is ${news.code} msg is ${news.msg}"))
+    }
+
 //    /**
 //     * 获取商品
 //     */

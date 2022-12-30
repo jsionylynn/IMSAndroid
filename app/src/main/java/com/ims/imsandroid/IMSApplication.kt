@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import com.ims.imsandroid.db.AppDatabase
+import com.tencent.mmkv.MMKV
 import dagger.hilt.android.HiltAndroidApp
 
 /**
@@ -36,5 +37,6 @@ class IMSApplication : Application() {
         context = applicationContext
         db = AppDatabase.getInstance(context)
         instance = this
+        MMKV.initialize(this)
     }
 }

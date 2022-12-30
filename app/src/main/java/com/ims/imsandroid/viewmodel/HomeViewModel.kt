@@ -14,6 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(repository: HomeRepository) : ViewModel() {
     val orders = repository.getOrders()
+    val goods = repository.getGoods()
 
     companion object {
         fun provideFactory(

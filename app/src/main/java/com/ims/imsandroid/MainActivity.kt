@@ -20,11 +20,14 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.ims.imsandroid.repository.HomeRepository
+import com.ims.imsandroid.ui.page.PageConstant.ADD_GOODS
+import com.ims.imsandroid.ui.page.PageConstant.ADD_ORDER
 import com.ims.imsandroid.ui.page.PageConstant.HOME_PAGE
 import com.ims.imsandroid.ui.page.PageConstant.LOGIN_PAGE
 import com.ims.imsandroid.ui.page.PageConstant.WELCOME_PAGE
 import com.ims.imsandroid.ui.page.home.HomePage
 import com.ims.imsandroid.ui.page.login.login
+import com.ims.imsandroid.ui.page.order.AddOrderPage
 import com.ims.imsandroid.ui.page.welcome.welcome
 import com.ims.imsandroid.ui.theme.IMSAndroidTheme
 import com.ims.imsandroid.viewmodel.HomeViewModel
@@ -89,6 +92,16 @@ class MainActivity : ComponentActivity() {
 
                         composable(HOME_PAGE) {
                             HomePage(navController, homeViewModel)
+                        }
+
+                        //添加订单
+                        composable(ADD_ORDER) {
+                            AddOrderPage(navController, homeViewModel)
+                        }
+
+                        //添加商品
+                        composable(ADD_GOODS) {
+                            AddOrderPage(navController, homeViewModel)
                         }
                     }
                 }

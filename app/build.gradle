@@ -122,4 +122,6 @@ dependencies {
     implementation "androidx.camera:camera-lifecycle:1.1.0"
     // If you want to additionally use the CameraX View class
     implementation "androidx.camera:camera-view:1.1.0"
+    //微信开源项目，替代SP
+    implementation 'com.tencent:mmkv:1.2.14'
 }

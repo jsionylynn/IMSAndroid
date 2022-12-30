@@ -27,7 +27,7 @@ data class Order(
     @ColumnInfo(name = "CREATE_BY") var createBy: String?,//创建人
     @ColumnInfo(name = "REMARK") var remark: String?,//备注
     @ColumnInfo(name = "SALE_PRICE") var salesPrice: Double?,//售价
-    @ColumnInfo(name = "STOCK") var stock: Int?,//库存
+    @ColumnInfo(name = "num") var num: String,//数量
     @ColumnInfo(name = "WEIGHT") var weight: Double?,//重量
     @ColumnInfo(name = "UNITS") var units: String?,//单位
     @ColumnInfo(name = "DESCRIPTION") var description: String?,//描述

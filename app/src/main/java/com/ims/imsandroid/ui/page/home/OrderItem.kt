@@ -79,9 +79,9 @@ fun OrderItem(mNavController: NavHostController, viewModel: HomeViewModel) {
                     contentScale = ContentScale.FillBounds
                 )
                 Column(modifier = Modifier.padding(8.dp, 0.dp, 0.dp, 0.dp)) {
-                    order.stock?.let {
+                    order.num?.let {
                         Text(
-                            text = it.toString(),
+                            text = it,
                             fontWeight = FontWeight.ExtraBold,
                             fontSize = 16.sp
                         )
